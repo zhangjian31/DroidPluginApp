@@ -1,0 +1,8 @@
+include ':DroidPlugin', ':EventBusLibrary'
+
+if (Boolean.parseBoolean(Main_APP)) {
+    include ':app'
+}
+if (Boolean.parseBoolean(PLUGIN_A)) {
+    include ':plugin_a'
+}
