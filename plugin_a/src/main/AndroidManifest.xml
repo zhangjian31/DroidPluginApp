@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.PluginService">
+        <service android:name=".service.PluginService"
+            android:process=":CustomPlugin">
             <intent-filter>
                 <action android:name="com.test.plugin.PluginService" />
             </intent-filter>
