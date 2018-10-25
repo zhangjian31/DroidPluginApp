@@ -95,7 +95,7 @@ public class MainFirstActivity extends AppCompatActivity {
 
     public void openPluginFirstActivity(View view) {
         if (isActivityActionAvailable(this, Constant.PLUGIN_FIRST_ACTION)) {
-            Intent intent = new Intent().setAction(Constant.PLUGIN_FIRST_ACTION);
+            Intent intent = new Intent().setPackage("com.test.plugin").setAction(Constant.PLUGIN_FIRST_ACTION);
             //启动很慢
 //            Intent intent = getPackageManager().getLaunchIntentForPackage("com.example.jery.plugina").setAction("com.example.jery.plugina.PluginAActivity");
             startActivity(intent);
