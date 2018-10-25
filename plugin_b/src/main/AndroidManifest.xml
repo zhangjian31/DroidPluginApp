@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.test.plugin.b">
+
+    <application
+        android:name=".PluginApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.PluginFirstActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.test.plugin.b.PluginFirstActivity" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.PluginSecondActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.test.plugin.b.PluginSecondActivity" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".service.PluginService">
+            <intent-filter>
+                <action android:name="com.test.plugin.b.PluginService" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".receiver.PluginBroadReceiver">
+            <intent-filter>
+                <action android:name="com.test.plugin.b.broadcast" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
