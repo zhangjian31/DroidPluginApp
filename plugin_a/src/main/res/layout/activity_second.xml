@@ -7,11 +7,12 @@
     android:background="#0f9f3f"
     android:orientation="vertical">
 
-    <TextView
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="PluginA Activity"
-        android:textSize="30sp" />
+        android:onClick="sendEventBus"
+        android:text="Plugin 接收广播"
+        android:textAllCaps="false" />
 
 </LinearLayout>

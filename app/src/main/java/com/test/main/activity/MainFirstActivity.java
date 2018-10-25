@@ -1,8 +1,10 @@
 package com.test.main.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -35,6 +37,7 @@ public class MainFirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         checkPermission();
+        showInfo();
     }
 
     @Override
@@ -43,6 +46,28 @@ public class MainFirstActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @SuppressLint("WrongConstant")
+    private void showInfo() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Main:");
+        builder.append(getPackageName());
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        builder.append("[");
+        builder.append("\r\n");
+        builder.append(applicationInfo.uid);
+        builder.append("\r\n");
+        builder.append(applicationInfo.packageName);
+        builder.append("\r\n");
+        builder.append(applicationInfo.processName);
+        builder.append("\r\n");
+        builder.append("]");
+        Toast.makeText(MainFirstActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
+    }
 
     public void installPlugin(final View view) {
         if (!PluginManager.getInstance().isConnected()) {

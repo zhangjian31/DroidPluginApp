@@ -1,7 +1,10 @@
 package com.test.plugin.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,6 +25,7 @@ public class PluginFirstActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+        showInfo();
     }
 
     @Override
@@ -30,6 +34,28 @@ public class PluginFirstActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @SuppressLint("WrongConstant")
+    private void showInfo() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Plugin:");
+        builder.append(getPackageName());
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        builder.append("[");
+        builder.append("\r\n");
+        builder.append(applicationInfo.uid);
+        builder.append("\r\n");
+        builder.append(applicationInfo.packageName);
+        builder.append("\r\n");
+        builder.append(applicationInfo.processName);
+        builder.append("\r\n");
+        builder.append("]");
+        Toast.makeText(PluginFirstActivity.this, builder.toString(), Toast.LENGTH_SHORT).show();
+    }
 
     public void startMainService(View view) {
         Intent intent = new Intent().setPackage("com.test.main").setAction(Constant.MAIN_SERVICE_ACTION);
@@ -73,5 +99,10 @@ public class PluginFirstActivity extends AppCompatActivity {
         if (bean != null && !TextUtils.isEmpty(bean.getTag())) {
             Toast.makeText(PluginFirstActivity.this, "On PluginFirst:" + bean.getTag(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void startPluginSecond(View view) {
+        Intent intent = new Intent(PluginFirstActivity.this, PluginSecondActivity.class);
+        startActivity(intent);
     }
 }
