@@ -17,7 +17,7 @@ android {
         }
     }
 }
-
+apply plugin: 'replugin-host-gradle'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -25,7 +25,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':DroidPlugin')
+//    implementation project(':DroidPlugin')
     implementation project(':EventBusLibrary')
+    implementation 'com.qihoo360.replugin:replugin-host-lib:2.2.4'
 
+}
+
+repluginHostConfig {
+    useAppCompat = true
+    /**
+     * 背景不透明的坑的数量
+     */
+    countNotTranslucentStandard = 6
+    countNotTranslucentSingleTop = 2
+    countNotTranslucentSingleTask = 3
+    countNotTranslucentSingleInstance = 2
 }
