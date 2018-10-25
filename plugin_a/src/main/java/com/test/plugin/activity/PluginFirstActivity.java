@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class PluginFirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         showInfo();
@@ -30,7 +30,7 @@ public class PluginFirstActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -94,12 +94,12 @@ public class PluginFirstActivity extends AppCompatActivity {
         EventBus.getDefault().post(new EventBean("plugin"));
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(EventBean bean) {
-        if (bean != null && !TextUtils.isEmpty(bean.getTag())) {
-            Toast.makeText(PluginFirstActivity.this, "On PluginFirst:" + bean.getTag(), Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void Event(EventBean bean) {
+//        if (bean != null && !TextUtils.isEmpty(bean.getTag())) {
+//            Toast.makeText(PluginFirstActivity.this, "On PluginFirst:" + bean.getTag(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     public void startPluginSecond(View view) {
         Intent intent = new Intent(PluginFirstActivity.this, PluginSecondActivity.class);

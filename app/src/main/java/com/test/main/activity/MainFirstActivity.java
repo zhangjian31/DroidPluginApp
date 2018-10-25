@@ -11,16 +11,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.didi.virtualapk.PluginManager;
 import com.test.eventbus.EventBean;
 import com.test.main.Constant;
 import com.test.main.R;
 import com.test.main.utils.FIleUtil;
-import com.morgoo.droidplugin.pm.PluginManager;
-import com.morgoo.helper.Log;
-import com.morgoo.helper.compat.PackageManagerCompat;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -70,9 +69,6 @@ public class MainFirstActivity extends AppCompatActivity {
     }
 
     public void installPlugin(final View view) {
-        if (!PluginManager.getInstance().isConnected()) {
-            Toast.makeText(MainFirstActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
-        }
         try {
             final File file = new File(FIleUtil.getDiskDir(this));
             new Thread(new Runnable() {
@@ -81,34 +77,8 @@ public class MainFirstActivity extends AppCompatActivity {
                     try {
                         File f = file.listFiles()[0];
                         Log.d(TAG, f.getPath());
-                        final int result = PluginManager.getInstance().installPackage(f.getPath(), 0);
-                        Log.d(TAG, "result=" + result);
-                        MainFirstActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (result == PackageManagerCompat.INSTALL_FAILED_ALREADY_EXISTS || result == PackageManagerCompat.INSTALL_SUCCEEDED) {
-                                    Toast.makeText(MainFirstActivity.this, "安装1成功", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MainFirstActivity.this, "安装1失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-                        File f2 = file.listFiles()[1];
-                        Log.d(TAG, f2.getPath());
-                        final int result2 = PluginManager.getInstance().installPackage(f2.getPath(), 0);
-                        Log.d(TAG, "result=" + result2);
-                        MainFirstActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (result2 == PackageManagerCompat.INSTALL_FAILED_ALREADY_EXISTS || result2 == PackageManagerCompat.INSTALL_SUCCEEDED) {
-                                    Toast.makeText(MainFirstActivity.this, "安装2成功", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MainFirstActivity.this, "安装2失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
+                        File plugin = new File(f.getPath());
+                        PluginManager.getInstance(MainFirstActivity.this).loadPlugin(plugin);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -134,15 +104,8 @@ public class MainFirstActivity extends AppCompatActivity {
     }
 
     public void openPluginFirstActivity(View view) {
-        if (isActivityActionAvailable(this, Constant.PLUGIN_FIRST_ACTION)) {
-            Intent intent = new Intent().setPackage("com.test.plugin").setAction(Constant.PLUGIN_FIRST_ACTION);
-            //启动很慢
-//            Intent intent = getPackageManager().getLaunchIntentForPackage("com.example.jery.plugina").setAction("com.example.jery.plugina.PluginAActivity");
-            startActivity(intent);
-
-        } else {
-            Toast.makeText(MainFirstActivity.this, "启动PluginFirstActivity失败", Toast.LENGTH_SHORT).show();
-        }
+        Intent intent = new Intent().setClassName("com.test.plugin", "com.test.plugin.activity.PluginFirstActivity");
+        startActivity(intent);
     }
 
 

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.didi.virtualapk.host'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -10,9 +11,26 @@ android {
         versionName "1.0"
         multiDexEnabled true
     }
-    buildTypes {
+    signingConfigs {
         release {
+            storeFile file("../keystore/test.keystore")
+            storePassword "test123456"
+            keyAlias "test"
+            keyPassword "test123456"
+        }
+    }
+
+
+    buildTypes {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,7 +43,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':DroidPlugin')
+//    implementation project(':DroidPlugin')
     implementation project(':EventBusLibrary')
-
+    implementation 'com.didi.virtualapk:core:0.9.8'
+//    implementation project(':plugin_a')
 }
