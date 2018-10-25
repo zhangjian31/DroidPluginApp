@@ -105,4 +105,13 @@ public class PluginFirstActivity extends AppCompatActivity {
         Intent intent = new Intent(PluginFirstActivity.this, PluginSecondActivity.class);
         startActivity(intent);
     }
+
+    public void startPluginB(View view) {
+        if (isActivityActionAvailable(this, Constant.PLUGIN_B_FIRST_ACTION)) {
+            Intent intent = new Intent().setAction(Constant.PLUGIN_B_FIRST_ACTION);
+            startActivity(intent);
+        } else {
+            Toast.makeText(PluginFirstActivity.this, "启动Plugin B First Activity失败", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

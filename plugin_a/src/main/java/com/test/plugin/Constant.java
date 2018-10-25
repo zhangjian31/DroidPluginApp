@@ -6,4 +6,6 @@ public class Constant {
     public static final String MAIN_SECOND_ACTION = "com.test.main.MainSecondActivity";
     public static final String MAIN_RECEIVER_ACTION = "com.test.main.broadcast";
 
+    public static final String PLUGIN_B_FIRST_ACTION = "com.test.plugin.b.PluginFirstActivity";
+
 }

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/EventBusLibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/plugin_a" />
+            <option value="$PROJECT_DIR$/plugin_b" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

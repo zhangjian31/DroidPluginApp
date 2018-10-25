@@ -32,7 +32,6 @@ public class MainSecondActivity extends AppCompatActivity {
 
     public void sendEventBus(View view) {
         EventBus.getDefault().post(new EventBean("main"));
-
     }
 
     public static boolean isActivityActionAvailable(Context context, String action) {

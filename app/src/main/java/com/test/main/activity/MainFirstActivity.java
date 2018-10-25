@@ -87,9 +87,24 @@ public class MainFirstActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (result == PackageManagerCompat.INSTALL_FAILED_ALREADY_EXISTS || result == PackageManagerCompat.INSTALL_SUCCEEDED) {
-                                    Toast.makeText(MainFirstActivity.this, "安装成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainFirstActivity.this, "安装1成功", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(MainFirstActivity.this, "安装失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainFirstActivity.this, "安装1失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                        File f2 = file.listFiles()[1];
+                        Log.d(TAG, f2.getPath());
+                        final int result2 = PluginManager.getInstance().installPackage(f2.getPath(), 0);
+                        Log.d(TAG, "result=" + result2);
+                        MainFirstActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (result2 == PackageManagerCompat.INSTALL_FAILED_ALREADY_EXISTS || result2 == PackageManagerCompat.INSTALL_SUCCEEDED) {
+                                    Toast.makeText(MainFirstActivity.this, "安装2成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainFirstActivity.this, "安装2失败", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -124,6 +139,7 @@ public class MainFirstActivity extends AppCompatActivity {
             //启动很慢
 //            Intent intent = getPackageManager().getLaunchIntentForPackage("com.example.jery.plugina").setAction("com.example.jery.plugina.PluginAActivity");
             startActivity(intent);
+
         } else {
             Toast.makeText(MainFirstActivity.this, "启动PluginFirstActivity失败", Toast.LENGTH_SHORT).show();
         }

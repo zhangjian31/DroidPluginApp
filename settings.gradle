@@ -6,3 +6,7 @@ if (Boolean.parseBoolean(Main_APP)) {
 if (Boolean.parseBoolean(PLUGIN_A)) {
     include ':plugin_a'
 }
+
+if (Boolean.parseBoolean(PLUGIN_B)) {
+    include ':plugin_b'
+}
