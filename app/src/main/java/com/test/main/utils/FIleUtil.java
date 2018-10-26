@@ -18,7 +18,6 @@ public class FIleUtil {
 
     public static String getDiskDir(Context context) {
         String cachePath = null;
-        Log.d("####","FileUtil->"+FIleUtil.class.getClassLoader());
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
             cachePath = Environment.getExternalStoragePublicDirectory("jery_plugin").getPath();

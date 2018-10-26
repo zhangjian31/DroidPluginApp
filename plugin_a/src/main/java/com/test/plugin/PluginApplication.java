@@ -3,6 +3,8 @@ package com.test.plugin;
 import android.app.Application;
 import android.util.Log;
 
+import com.test.plugin.utils.ClassLoaderTest;
+
 public class PluginApplication extends Application {
     @Override
     public void onCreate() {
@@ -16,5 +18,6 @@ public class PluginApplication extends Application {
                 Log.d("ClassLoader-", i + "   " + classLoader.toString());
             }
         }
+        System.out.println("####PluginApplication"+classLoader.toString());
     }
 }

@@ -22,6 +22,7 @@ import com.test.eventbus.EventBean;
 import com.test.main.Constant;
 import com.test.main.R;
 import com.test.main.utils.FIleUtil;
+import com.test.main.utils.TestUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,7 +40,7 @@ public class MainFirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         checkPermission();
         showInfo();
-        System.out.println("####main-1"+getClassLoader().toString());
+        TestUtils.print();
     }
 
     @Override

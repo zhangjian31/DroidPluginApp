@@ -17,6 +17,7 @@ import com.qihoo360.replugin.loader.s.PluginServiceClient;
 import com.test.eventbus.EventBean;
 import com.test.plugin.Constant;
 import com.test.plugin.R;
+import com.test.plugin.utils.ClassLoaderTest;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +34,7 @@ public class PluginFirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         showInfo();
+
     }
 
 
@@ -127,6 +129,7 @@ public class PluginFirstActivity extends AppCompatActivity {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+        ClassLoaderTest.test();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
