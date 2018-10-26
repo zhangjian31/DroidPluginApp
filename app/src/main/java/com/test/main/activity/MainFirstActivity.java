@@ -39,6 +39,7 @@ public class MainFirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         checkPermission();
         showInfo();
+        System.out.println("####main-1"+getClassLoader().toString());
     }
 
     @Override

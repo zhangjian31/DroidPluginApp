@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -105,6 +106,10 @@ public class PluginFirstActivity extends AppCompatActivity {
 
     public void sendEventBus(View view) {
         ClassLoader classLoader = RePlugin.getHostClassLoader();
+        ClassLoader classLoader2 = getClassLoader();
+        Toast.makeText(PluginFirstActivity.this, "result=" + (classLoader == classLoader2), Toast.LENGTH_SHORT).show();
+        System.out.println("####pubgin1"+classLoader.toString());
+        System.out.println("####pubgin2"+classLoader2.toString());
         try {
             Class cls = classLoader.loadClass("com.test.eventbus.EventBean");
             Constructor constructor = cls.getConstructor(String.class);
