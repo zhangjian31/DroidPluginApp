@@ -20,7 +20,7 @@ public class PluginSecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_plugin_second);
     }
 
     @Override

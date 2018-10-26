@@ -1,4 +1,4 @@
-EventBusLibrary:release:unspecified 0
+EventBusLibrary:debug:unspecified 0
 android.arch.core:common:1.1.0 11156
 android.arch.core:runtime:1.1.0 160
 android.arch.lifecycle:common:1.1.0 20605
