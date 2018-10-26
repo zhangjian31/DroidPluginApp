@@ -36,8 +36,11 @@ repluginHostConfig {
     /**
      * 背景不透明的坑的数量
      */
-    countNotTranslucentStandard = 6
-    countNotTranslucentSingleTop = 2
-    countNotTranslucentSingleTask = 3
-    countNotTranslucentSingleInstance = 2
+//    countNotTranslucentStandard = 6
+//    countNotTranslucentSingleTop = 2
+//    countNotTranslucentSingleTask = 3
+//    countNotTranslucentSingleInstance = 2
+
+    // 设置为“不需要常驻进程”
+    persistentEnable = false
 }

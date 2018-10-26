@@ -1,5 +1,7 @@
 package com.test.eventbus;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class EventBean {
     private String tag;
 
@@ -13,5 +15,9 @@ public class EventBean {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public void send() {
+        EventBus.getDefault().post(this);
     }
 }

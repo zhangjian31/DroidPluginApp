@@ -19,7 +19,7 @@ public class MainService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand() executed");
-        Toast.makeText(this, "Service is running...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Main Service is running...", Toast.LENGTH_SHORT).show();
         return super.onStartCommand(intent, flags, startId);
     }
 

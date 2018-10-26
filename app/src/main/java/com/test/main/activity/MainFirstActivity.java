@@ -11,10 +11,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.qihoo360.replugin.RePlugin;
+import com.qihoo360.replugin.component.service.PluginServiceClient;
 import com.qihoo360.replugin.model.PluginInfo;
 import com.test.eventbus.EventBean;
 import com.test.main.Constant;
@@ -70,12 +72,25 @@ public class MainFirstActivity extends AppCompatActivity {
 
     public void installPlugin(final View view) {
         try {
-            final File file = new File(FIleUtil.getDiskDir(this));
-            File f = file.listFiles()[0];
-            PluginInfo pi = RePlugin.install(f.getPath());
-            if (pi != null) {
-                RePlugin.preload(pi);
-            }
+            new Thread() {
+                @Override
+                public void run() {
+                    final File file = new File(FIleUtil.getDiskDir(MainFirstActivity.this));
+                    File f = file.listFiles()[0];
+                    final PluginInfo pi = RePlugin.install(f.getPath());
+                    if (pi == null) {
+                        Toast.makeText(MainFirstActivity.this, "安装失败", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    MainFirstActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainFirstActivity.this, pi.toString(), Toast.LENGTH_LONG).show();
+                            Log.d("PluginInfo-->", pi.toString());
+                        }
+                    });
+                }
+            }.start();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(MainFirstActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
@@ -83,15 +98,15 @@ public class MainFirstActivity extends AppCompatActivity {
     }
 
     public void startPluginService(View view) {
-        Intent intent = new Intent().setAction(Constant.PLUGIN_SERVICE_ACTION);
-
-        startService(intent);
-        Toast.makeText(MainFirstActivity.this, "启动PluginService服务失败", Toast.LENGTH_SHORT).show();
+        Intent intent = RePlugin.createIntent("com.test.plugin", "com.test.plugin.service.PluginService");
+        PluginServiceClient.startService(MainFirstActivity.this, intent);
     }
 
     public void openPluginFirstActivity(View view) {
-        Intent intent = new Intent().setAction(Constant.PLUGIN_FIRST_ACTION);
-        startActivity(intent);
+        Intent intent = RePlugin.createIntent("com.test.plugin", "com.test.plugin.activity.PluginFirstActivity");
+        if (!RePlugin.startActivity(MainFirstActivity.this, intent)) {
+            Toast.makeText(MainFirstActivity.this, "启动失败", Toast.LENGTH_LONG).show();
+        }
     }
 
 

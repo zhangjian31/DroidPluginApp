@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.qihoo360.replugin.RePlugin;
+import com.qihoo360.replugin.loader.s.PluginServiceClient;
 import com.test.eventbus.EventBean;
 import com.test.plugin.Constant;
 import com.test.plugin.R;
@@ -18,6 +20,10 @@ import com.test.plugin.R;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class PluginFirstActivity extends AppCompatActivity {
     @Override
@@ -27,6 +33,7 @@ public class PluginFirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         showInfo();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -59,20 +66,26 @@ public class PluginFirstActivity extends AppCompatActivity {
 
     public void startMainService(View view) {
         Intent intent = new Intent().setPackage("com.test.main").setAction(Constant.MAIN_SERVICE_ACTION);
-        if (isServiceActionAvailable(this, Constant.MAIN_SERVICE_ACTION)) {
-            startService(intent);
-        } else {
-            Toast.makeText(PluginFirstActivity.this, "启动MainService服务失败", Toast.LENGTH_SHORT).show();
-        }
+        startService(intent);
+//        Intent intent = RePlugin.createIntent("com.test.main", "com.test.main.service.PluginService");
+//        PluginServiceClient.startService(PluginFirstActivity.this, intent);
     }
 
     public void openMainSecondActivity(View view) {
-        if (isActivityActionAvailable(this, Constant.MAIN_SECOND_ACTION)) {
-            Intent intent = new Intent().setAction(Constant.MAIN_SECOND_ACTION);
-            startActivity(intent);
-        } else {
-            Toast.makeText(PluginFirstActivity.this, "启动MainSecondActivity失败", Toast.LENGTH_SHORT).show();
-        }
+
+        Intent intent = new Intent().setClassName("com.test.main", "com.test.main.activity.MainSecondActivity");
+        startActivity(intent);
+//        Intent intent = RePlugin.createIntent("com.test.main", "com.test.main.activity.MainSecondActivity");
+//        if (!RePlugin.startActivity(PluginFirstActivity.this, intent)) {
+//            Toast.makeText(PluginFirstActivity.this, "启动失败", Toast.LENGTH_LONG).show();
+//        }
+
+//        if (isActivityActionAvailable(this, Constant.MAIN_SECOND_ACTION)) {
+//            Intent intent = new Intent().setAction(Constant.MAIN_SECOND_ACTION);
+//            startActivity(intent);
+//        } else {
+//            Toast.makeText(PluginFirstActivity.this, "启动MainSecondActivity失败", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public void sendBroadcastToMain(View view) {
@@ -91,7 +104,24 @@ public class PluginFirstActivity extends AppCompatActivity {
     }
 
     public void sendEventBus(View view) {
-        EventBus.getDefault().post(new EventBean("plugin"));
+        ClassLoader classLoader = RePlugin.getHostClassLoader();
+        try {
+            Class cls = classLoader.loadClass("com.test.eventbus.EventBean");
+            Constructor constructor = cls.getConstructor(String.class);
+            Object obj = constructor.newInstance("plugin");
+            Method method = cls.getDeclaredMethod("send");
+            method.invoke(obj);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
